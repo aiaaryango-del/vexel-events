@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.title }} - Event Details</title>
+
+```
+<script src="https://cdn.tailwindcss.com"></script>
+```
+
+</head>
+
+<body class="bg-gray-100">
+
+```
+<div class="max-w-7xl mx-auto px-4 py-10">
+
+    <!-- Header -->
+    <div class="bg-white rounded-2xl shadow-sm border p-8">
+
+        <h1 class="text-3xl font-bold text-gray-900">
+            {{ event.title }}
+        </h1>
+
+        <div class="mt-4 grid md:grid-cols-3 gap-4">
+
+            <div>
+                <p class="text-sm text-gray-500">
+                    Event Date
+                </p>
+                <p class="font-semibold">
+                    {{ event.date }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-sm text-gray-500">
+                    Venue
+                </p>
+                <p class="font-semibold">
+                    {{ event.venue }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-sm text-gray-500">
+                    Total Registrations
+                </p>
+                <p class="text-2xl font-bold">
+                    {{ attendees|length }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Export Button -->
+    <div class="mt-6 flex justify-end">
+
+        <a
+            href="{{ url_for('export_attendees', event_id=event.id) }}"
+            class="bg-black text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800"
+        >
+            Export CSV
+        </a>
+
+    </div>
+
+    <!-- Attendee Table -->
+    <div class="mt-6 bg-white rounded-2xl shadow-sm border overflow-hidden">
+
+        <div class="p-6 border-b">
+
+            <h2 class="text-2xl font-bold">
+                Registered Attendees
+            </h2>
+
+        </div>
+
+        {% if attendees %}
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full">
+
+                <thead class="bg-gray-50">
+
+                    <tr>
+
+                        <th class="text-left p-4">
+                            Name
+                        </th>
+
+                        <th class="text-left p-4">
+                            Phone
+                        </th>
+
+                        <th class="text-left p-4">
+                            Email
+                        </th>
+
+                        <th class="text-left p-4">
+                            Profession
+                        </th>
+
+                        <th class="text-left p-4">
+                            Company
+                        </th>
+
+                        <th class="text-left p-4">
+                            Registered
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for attendee in attendees %}
+
+                    <tr class="border-t">
+
+                        <td class="p-4">
+                            {{ attendee.full_name }}
+                        </td>
+
+                        <td class="p-4">
+                            {{ attendee.phone }}
+                        </td>
+
+                        <td class="p-4">
+                            {{ attendee.email }}
+                        </td>
+
+                        <td class="p-4">
+                            {{ attendee.profession }}
+                        </td>
+
+                        <td class="p-4">
+                            {{ attendee.company_name }}
+                        </td>
+
+                        <td class="p-4">
+                            {{ attendee.registration_time }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="p-10 text-center">
+
+            <h3 class="text-xl font-semibold">
+                No Registrations Yet
+            </h3>
+
+            <p class="text-gray-600 mt-3">
+                Attendees will appear here once they register.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+```
+
+</body>
+</html>
